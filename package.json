@@ -5,13 +5,13 @@
   "version": "0.1.0",
   "publisher": "Sapphify",
   "license": "MIT",
-  "homepage": "https://github.com/octgroup/claude-code-rtl#readme",
+  "homepage": "https://github.com/Ziondido/claude-code-rtl#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/octgroup/claude-code-rtl"
+    "url": "https://github.com/Ziondido/claude-code-rtl"
   },
   "bugs": {
-    "url": "https://github.com/octgroup/claude-code-rtl/issues"
+    "url": "https://github.com/Ziondido/claude-code-rtl/issues"
   },
   "icon": "icon.png",
   "galleryBanner": {
