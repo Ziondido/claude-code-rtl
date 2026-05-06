@@ -28,30 +28,6 @@ function extDirsForHome(home: string): string[] {
     ];
 }
 
-async function isWsl(): Promise<boolean> {
-    try {
-        const v = await fs.readFile('/proc/version', 'utf-8');
-        return v.toLowerCase().includes('microsoft');
-    } catch { return false; }
-}
-
-async function wslWindowsHomes(): Promise<string[]> {
-    const homes: string[] = [];
-    const skip = new Set(['public', 'default', 'default user', 'all users']);
-    for (const drive of ['c', 'd']) {
-        const usersDir = `/mnt/${drive}/Users`;
-        try {
-            const entries = await fs.readdir(usersDir);
-            for (const entry of entries) {
-                if (skip.has(entry.toLowerCase())) continue;
-                const p = path.join(usersDir, entry);
-                try { if ((await fs.stat(p)).isDirectory()) homes.push(p); } catch { /* skip */ }
-            }
-        } catch { /* drive not mounted */ }
-    }
-    return homes;
-}
-
 async function searchDir(dir: string): Promise<ExtInfo[]> {
     if (!(await exists(dir))) return [];
     let entries: string[];
@@ -75,9 +51,6 @@ export async function findClaudeExtensions(): Promise<ExtInfo[]> {
         if (up) homes.push(up);
     } else {
         homes.push(os.homedir());
-        if (await isWsl()) {
-            homes.push(...await wslWindowsHomes());
-        }
     }
 
     const allDirs = homes.flatMap(extDirsForHome);
