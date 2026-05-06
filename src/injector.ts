@@ -1,6 +1,6 @@
 import * as fs from 'fs/promises';
 import { ExtInfo } from './finder.js';
-import { MARKER_START, MARKER_END, RTL_CSS, RTL_JS } from './content.js';
+import { MARKER_START, RTL_CSS, RTL_JS } from './content.js';
 
 async function exists(p: string): Promise<boolean> {
     try { await fs.access(p); return true; } catch { return false; }

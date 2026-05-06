@@ -77,7 +77,7 @@ ${MARKER_END}
 `;
 
 export const RTL_JS = `
-/* RTL-AUTO: start */
+${MARKER_START}
 (function() {
     var RTL = /[\\u0590-\\u05FF\\u0600-\\u06FF\\u0750-\\u077F\\uFB50-\\uFDFF\\uFE70-\\uFEFF]/;
     var CLS = 'YBYrtl';
@@ -158,5 +158,5 @@ export const RTL_JS = `
     if (document.readyState !== 'loading') init();
     else document.addEventListener('DOMContentLoaded', init);
 })();
-/* RTL-AUTO: end */
+${MARKER_END}
 `;
