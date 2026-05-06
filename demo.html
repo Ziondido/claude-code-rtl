@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code RTL – Demo</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #1e1e1e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 24px;
+  }
+
+  .vscode-window {
+    width: 820px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.7);
+    border: 1px solid #3c3c3c;
+  }
+
+  /* Title bar */
+  .titlebar {
+    background: #2d2d2d;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 8px;
+    border-bottom: 1px solid #1a1a1a;
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.red { background: #ff5f57; }
+  .dot.yellow { background: #febc2e; }
+  .dot.green { background: #28c840; }
+  .titlebar-text {
+    flex: 1;
+    text-align: center;
+    font-size: 12px;
+    color: #999;
+    margin-left: -60px;
+  }
+
+  /* Chat panel */
+  .chat-panel {
+    background: #1e1e1e;
+    display: flex;
+    flex-direction: column;
+    height: 580px;
+  }
+
+  /* Chat header */
+  .chat-header {
+    background: #252526;
+    padding: 0 16px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #3c3c3c;
+    flex-shrink: 0;
+  }
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .claude-icon {
+    width: 22px;
+    height: 22px;
+    background: linear-gradient(135deg, #d97706, #f59e0b);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: white;
+    font-weight: bold;
+  }
+  .header-title {
+    font-size: 13px;
+    color: #cccccc;
+    font-weight: 500;
+  }
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .header-btn {
+    width: 26px;
+    height: 26px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    background: transparent;
+    color: #ccc;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.4;
+    transition: opacity 0.2s, background 0.15s;
+  }
+  .header-btn:hover { opacity: 0.9; background: rgba(255,255,255,0.08); }
+  .header-btn.rtl-on {
+    opacity: 1;
+    color: #4da6ff;
+  }
+
+  /* Badge */
+  .badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: #4da6ff;
+    color: white;
+    font-size: 8px;
+    font-weight: bold;
+    padding: 1px 4px;
+    border-radius: 8px;
+    pointer-events: none;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .rtl-btn-wrap {
+    position: relative;
+  }
+
+  /* Messages */
+  .messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    scrollbar-width: thin;
+    scrollbar-color: #444 transparent;
+  }
+
+  .message { display: flex; flex-direction: column; gap: 4px; }
+
+  /* Claude message */
+  .msg-claude {
+    align-items: flex-start;
+  }
+  .msg-claude .bubble {
+    background: transparent;
+    color: #d4d4d4;
+    font-size: 13.5px;
+    line-height: 1.6;
+    max-width: 85%;
+    padding: 2px 0;
+  }
+  .msg-label {
+    font-size: 11px;
+    color: #666;
+    margin-bottom: 2px;
+  }
+
+  /* User message */
+  .msg-user {
+    align-items: flex-end;
+  }
+  .msg-user .bubble {
+    background: #2a2d2e;
+    border: 1px solid #3c3c3c;
+    border-radius: 12px 12px 2px 12px;
+    padding: 8px 12px;
+    font-size: 13.5px;
+    color: #d4d4d4;
+    max-width: 75%;
+    line-height: 1.6;
+    transition: direction 0.2s, text-align 0.2s;
+  }
+
+  /* RTL state */
+  .rtl-active .msg-user.rtl-msg {
+    align-items: flex-start;
+  }
+  .rtl-active .msg-user.rtl-msg .bubble {
+    direction: rtl;
+    text-align: right;
+    border-radius: 12px 12px 12px 2px;
+    margin-right: auto;
+    margin-left: 0;
+  }
+
+  /* Code block */
+  .code-block {
+    background: #1a1a1a;
+    border: 1px solid #3c3c3c;
+    border-radius: 6px;
+    padding: 12px;
+    font-family: 'Cascadia Code', 'Fira Code', monospace;
+    font-size: 12px;
+    color: #9cdcfe;
+    direction: ltr !important;
+    text-align: left !important;
+    margin-top: 6px;
+    width: 85%;
+  }
+  .code-lang {
+    font-size: 10px;
+    color: #666;
+    margin-bottom: 6px;
+    font-family: inherit;
+  }
+
+  /* Input area */
+  .input-area {
+    padding: 12px 16px;
+    border-top: 1px solid #3c3c3c;
+    flex-shrink: 0;
+  }
+  .input-box {
+    background: #2d2d2d;
+    border: 1px solid #3c3c3c;
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .input-field {
+    flex: 1;
+    font-size: 13px;
+    color: #ccc;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: inherit;
+    resize: none;
+    transition: direction 0.2s, text-align 0.2s;
+  }
+  .input-field::placeholder { color: #555; }
+  .rtl-active .input-field {
+    direction: rtl;
+    text-align: right;
+  }
+  .send-btn {
+    width: 28px;
+    height: 28px;
+    background: #4da6ff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+
+  /* Tooltip */
+  .tooltip {
+    position: fixed;
+    background: #333;
+    color: #fff;
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+    white-space: nowrap;
+    z-index: 100;
+  }
+
+  /* Demo label */
+  .demo-label {
+    text-align: center;
+    color: #555;
+    font-size: 11px;
+    margin-top: 12px;
+    letter-spacing: 0.5px;
+  }
+
+  /* Animate new RTL bubble */
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .rtl-active .msg-user.rtl-msg .bubble {
+    animation: slideIn 0.25s ease;
+  }
+
+  /* Highlight the button on first load */
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(77,166,255,0); }
+    50% { box-shadow: 0 0 0 4px rgba(77,166,255,0.35); }
+  }
+  .pulse { animation: pulse 1.5s ease 0.8s 3; }
+</style>
+</head>
+<body>
+
+<div>
+  <div class="vscode-window">
+    <!-- Title bar -->
+    <div class="titlebar">
+      <div class="dot red"></div>
+      <div class="dot yellow"></div>
+      <div class="dot green"></div>
+      <div class="titlebar-text">Claude — Visual Studio Code</div>
+    </div>
+
+    <!-- Chat panel -->
+    <div class="chat-panel">
+      <!-- Header -->
+      <div class="chat-header">
+        <div class="header-left">
+          <div class="claude-icon">C</div>
+          <span class="header-title">Claude</span>
+        </div>
+        <div class="header-actions">
+          <button class="header-btn" title="New conversation">✎</button>
+          <button class="header-btn" title="History">⊞</button>
+          <div class="rtl-btn-wrap">
+            <button id="rtl-btn" class="header-btn pulse" title="RTL: Off — click to enable">⇄</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Messages -->
+      <div class="messages" id="messages">
+        <div class="message msg-claude">
+          <div class="msg-label">Claude</div>
+          <div class="bubble">
+            Hello! How can I help you today?
+          </div>
+        </div>
+
+        <div class="message msg-user">
+          <div class="bubble">Can you help me write a function in Python?</div>
+        </div>
+
+        <div class="message msg-claude">
+          <div class="msg-label">Claude</div>
+          <div class="bubble">
+            Sure! Here's a simple example:
+            <div class="code-block">
+              <div class="code-lang">python</div>
+              <span style="color:#569cd6">def</span> <span style="color:#dcdcaa">greet</span>(name: <span style="color:#4ec9b0">str</span>) -> <span style="color:#4ec9b0">str</span>:<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#569cd6">return</span> <span style="color:#ce9178">f"Hello, {name}!"</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="message msg-user rtl-msg">
+          <div class="bubble">תודה רבה! האם תוכל להסביר איך זה עובד?</div>
+        </div>
+
+        <div class="message msg-claude">
+          <div class="msg-label">Claude</div>
+          <div class="bubble">
+            Of course! The function takes a <code style="background:#2a2a2a;padding:1px 4px;border-radius:3px;font-size:12px">name</code> parameter and returns a formatted greeting string using an f-string.
+          </div>
+        </div>
+
+        <div class="message msg-user rtl-msg">
+          <div class="bubble">מצוין, עכשיו אני מבין. תודה!</div>
+        </div>
+      </div>
+
+      <!-- Input -->
+      <div class="input-area">
+        <div class="input-box">
+          <textarea class="input-field" id="input-field" rows="1" placeholder="Ask Claude anything..."></textarea>
+          <button class="send-btn">↑</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="demo-label" id="demo-label">↑ Click ⇄ in the header to toggle RTL — try typing Hebrew in the input</div>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+  const btn = document.getElementById('rtl-btn');
+  const panel = document.querySelector('.chat-panel');
+  const inputField = document.getElementById('input-field');
+  let enabled = false;
+
+  btn.addEventListener('click', function() {
+    enabled = !enabled;
+    btn.classList.toggle('rtl-on', enabled);
+    btn.title = enabled ? 'RTL: On — click to disable' : 'RTL: Off — click to enable';
+    panel.classList.toggle('rtl-active', enabled);
+  });
+
+  // Auto-resize textarea
+  inputField.addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+  });
+</script>
+</body>
+</html>

@@ -21,13 +21,25 @@
   "engines": {
     "vscode": "^1.94.0"
   },
-  "categories": ["Other", "Language Packs"],
-  "keywords": [
-    "rtl", "hebrew", "arabic", "right-to-left",
-    "cursor", "claude-code", "persian",
-    "bidirectional", "ai-chat", "antigravity"
+  "categories": [
+    "Other",
+    "Language Packs"
   ],
-  "activationEvents": ["onStartupFinished"],
+  "keywords": [
+    "rtl",
+    "hebrew",
+    "arabic",
+    "right-to-left",
+    "cursor",
+    "claude-code",
+    "persian",
+    "bidirectional",
+    "ai-chat",
+    "antigravity"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
@@ -48,9 +60,10 @@
     "package": "npx @vscode/vsce package --allow-missing-repository"
   },
   "devDependencies": {
-    "@types/vscode": "^1.94.0",
     "@types/node": "^20.0.0",
+    "@types/vscode": "^1.94.0",
     "esbuild": "^0.24.0",
+    "puppeteer": "^24.43.0",
     "typescript": "^5.7.0"
   }
 }

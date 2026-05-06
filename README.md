@@ -1,6 +1,10 @@
-# Claude Code RTL
+# Claude Code RTL – Hebrew, Arabic & Persian Support
 
 **Toggle RTL instantly from inside the chat — no reload, no config.**
+
+| RTL Off | RTL On |
+|---|---|
+| ![RTL Off](https://raw.githubusercontent.com/Ziondido/claude-code-rtl/master/images/01-rtl-off.png) | ![RTL On](https://raw.githubusercontent.com/Ziondido/claude-code-rtl/master/images/02-rtl-on.png) |
 
 Adds automatic Right-to-Left support for Hebrew, Arabic and Persian to [Claude Code](https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code) in VS Code, Cursor and Antigravity.
 
