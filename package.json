@@ -1,0 +1,53 @@
+{
+  "name": "claude-rtl-auto",
+  "displayName": "Claude Code RTL",
+  "description": "Auto RTL support for Hebrew, Arabic and Persian in Claude Code — per-bubble detection, toggle button, no config needed",
+  "version": "0.1.0",
+  "publisher": "octgroup",
+  "license": "MIT",
+  "homepage": "https://github.com/octgroup/claude-code-rtl#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/octgroup/claude-code-rtl"
+  },
+  "bugs": {
+    "url": "https://github.com/octgroup/claude-code-rtl/issues"
+  },
+  "icon": "icon.png",
+  "engines": {
+    "vscode": "^1.94.0"
+  },
+  "categories": ["Other", "Language Packs"],
+  "keywords": [
+    "rtl", "hebrew", "arabic", "persian", "farsi",
+    "claude-code", "claude", "anthropic",
+    "right-to-left", "bidirectional", "bidi",
+    "vscode", "cursor", "antigravity"
+  ],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "claude-rtl-auto.enable",
+        "title": "Claude RTL: Enable"
+      },
+      {
+        "command": "claude-rtl-auto.disable",
+        "title": "Claude RTL: Disable"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "node esbuild.mjs --production",
+    "watch": "node esbuild.mjs --watch",
+    "package": "npx @vscode/vsce package --allow-missing-repository"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.94.0",
+    "@types/node": "^20.0.0",
+    "esbuild": "^0.24.0",
+    "typescript": "^5.7.0"
+  }
+}
