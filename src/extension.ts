@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { findClaudeExtensions } from './finder.js';
-import { inject, remove, isInstalled } from './injector.js';
+import { inject, isInstalled } from './injector.js';
 
 const RELOAD_FLAG_KEY = 'rtl.reloading';
 
@@ -37,8 +37,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     ensureInjected().catch(err => console.error('RTL inject failed:', err));
 }
 
-export async function deactivate(): Promise<void> {
-    if (globalState?.get<boolean>(RELOAD_FLAG_KEY)) return;
-    const exts = await findClaudeExtensions().catch(() => []);
-    for (const ext of exts) await remove(ext).catch(() => {});
+export function deactivate(): void {
+    // RTL stays injected in Claude Code files across VSCode restarts.
+    // Removal only happens via explicit user action (future disable command).
 }
