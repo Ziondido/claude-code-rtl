@@ -3,7 +3,7 @@
   "displayName": "Claude Code RTL",
   "description": "Toggle RTL instantly from inside the chat — no reload, no config. Auto-detects Hebrew, Arabic and Persian per bubble in Claude Code, Cursor and Antigravity.",
   "version": "0.1.0",
-  "publisher": "octgroup",
+  "publisher": "Sapphify",
   "license": "MIT",
   "homepage": "https://github.com/octgroup/claude-code-rtl#readme",
   "repository": {
