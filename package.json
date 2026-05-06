@@ -1,7 +1,7 @@
 {
   "name": "claude-rtl-auto",
   "displayName": "Claude Code RTL",
-  "description": "Auto RTL support for Hebrew, Arabic and Persian in Claude Code — per-bubble detection, toggle button, no config needed",
+  "description": "Toggle RTL instantly from inside the chat — no reload, no config. Auto-detects Hebrew, Arabic and Persian per bubble in Claude Code, Cursor and Antigravity.",
   "version": "0.1.0",
   "publisher": "octgroup",
   "license": "MIT",
@@ -14,6 +14,10 @@
     "url": "https://github.com/octgroup/claude-code-rtl/issues"
   },
   "icon": "icon.png",
+  "galleryBanner": {
+    "color": "#1a1a2e",
+    "theme": "dark"
+  },
   "engines": {
     "vscode": "^1.94.0"
   },
@@ -22,7 +26,9 @@
     "rtl", "hebrew", "arabic", "persian", "farsi",
     "claude-code", "claude", "anthropic",
     "right-to-left", "bidirectional", "bidi",
-    "vscode", "cursor", "antigravity"
+    "vscode", "cursor", "antigravity",
+    "text-direction", "input-direction", "bilingual",
+    "עברית", "israel", "cursor-ide"
   ],
   "activationEvents": ["onStartupFinished"],
   "main": "./dist/extension.js",
