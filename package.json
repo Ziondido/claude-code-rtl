@@ -1,6 +1,6 @@
 {
   "name": "claude-rtl-auto",
-  "displayName": "Claude Code RTL",
+  "displayName": "Claude Code RTL – Hebrew, Arabic & Persian Support",
   "description": "Toggle RTL instantly from inside the chat — no reload, no config. Auto-detects Hebrew, Arabic and Persian per bubble in Claude Code, Cursor and Antigravity.",
   "version": "0.1.0",
   "publisher": "Sapphify",
@@ -23,12 +23,9 @@
   },
   "categories": ["Other", "Language Packs"],
   "keywords": [
-    "rtl", "hebrew", "arabic", "persian", "farsi",
-    "claude-code", "claude", "anthropic",
-    "right-to-left", "bidirectional", "bidi",
-    "vscode", "cursor", "antigravity",
-    "text-direction", "input-direction", "bilingual",
-    "עברית", "israel", "cursor-ide"
+    "rtl", "hebrew", "arabic", "right-to-left",
+    "cursor", "claude-code", "persian",
+    "bidirectional", "ai-chat", "antigravity"
   ],
   "activationEvents": ["onStartupFinished"],
   "main": "./dist/extension.js",
