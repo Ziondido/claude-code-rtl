@@ -1,7 +1,7 @@
 {
   "name": "claude-rtl-auto",
   "displayName": "Claude Code RTL – Hebrew, Arabic & Persian Support",
-  "description": "Toggle RTL instantly from inside the chat — no reload, no config. Auto-detects Hebrew, Arabic and Persian per bubble in Claude Code, Cursor and Antigravity.",
+  "description": "RTL support for Hebrew, Arabic and Persian in Claude Code. Fixes text direction in VS Code, Cursor and Antigravity AI chat — toggle button inside the chat, no reload needed.",
   "version": "0.2.1",
   "publisher": "Sapphify",
   "license": "MIT",
@@ -23,8 +23,12 @@
   },
   "categories": [
     "Other",
-    "Language Packs"
+    "Language Packs",
+    "Education"
   ],
+  "sponsor": {
+    "url": "https://github.com/Ziondido/claude-code-rtl"
+  },
   "keywords": [
     "rtl",
     "hebrew",
