@@ -9,401 +9,277 @@
 
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #1e1e1e;
+    background: #141414;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
-    padding: 24px;
+    width: 960px;
+    height: 620px;
+    overflow: hidden;
   }
 
   .vscode-window {
-    width: 820px;
+    width: 860px;
+    height: 580px;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 32px 80px rgba(0,0,0,0.7);
-    border: 1px solid #3c3c3c;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.8);
+    border: 1px solid #333;
+    display: flex;
+    flex-direction: column;
   }
 
   /* Title bar */
   .titlebar {
-    background: #2d2d2d;
-    height: 36px;
+    background: #2b2b2b;
+    height: 34px;
     display: flex;
     align-items: center;
-    padding: 0 16px;
-    gap: 8px;
+    padding: 0 14px;
+    gap: 7px;
     border-bottom: 1px solid #1a1a1a;
+    flex-shrink: 0;
   }
-  .dot { width: 12px; height: 12px; border-radius: 50%; }
-  .dot.red { background: #ff5f57; }
-  .dot.yellow { background: #febc2e; }
-  .dot.green { background: #28c840; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+  .dot.red   { background: #ff5f57; }
+  .dot.yel   { background: #febc2e; }
+  .dot.grn   { background: #28c840; }
   .titlebar-text {
     flex: 1;
     text-align: center;
     font-size: 12px;
-    color: #999;
-    margin-left: -60px;
-  }
-
-  /* Chat panel */
-  .chat-panel {
-    background: #1e1e1e;
-    display: flex;
-    flex-direction: column;
-    height: 580px;
+    color: #888;
+    margin-left: -66px;
   }
 
   /* Chat header */
   .chat-header {
     background: #252526;
-    padding: 0 16px;
-    height: 44px;
+    height: 42px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid #3c3c3c;
+    padding: 0 14px;
+    border-bottom: 1px solid #333;
     flex-shrink: 0;
   }
-  .header-left {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+  .header-left { display: flex; align-items: center; gap: 9px; }
   .claude-icon {
-    width: 22px;
-    height: 22px;
-    background: linear-gradient(135deg, #d97706, #f59e0b);
+    width: 22px; height: 22px;
+    background: linear-gradient(135deg, #e07820, #f5a623);
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    color: white;
-    font-weight: bold;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: white; font-weight: bold; flex-shrink: 0;
   }
-  .header-title {
-    font-size: 13px;
-    color: #cccccc;
-    font-weight: 500;
-  }
-  .header-actions {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-  .header-btn {
-    width: 26px;
-    height: 26px;
-    border-radius: 4px;
-    border: none;
-    cursor: pointer;
-    background: transparent;
-    color: #ccc;
-    font-size: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.4;
-    transition: opacity 0.2s, background 0.15s;
-  }
-  .header-btn:hover { opacity: 0.9; background: rgba(255,255,255,0.08); }
-  .header-btn.rtl-on {
-    opacity: 1;
-    color: #4da6ff;
-  }
+  .header-title { font-size: 13px; color: #ccc; font-weight: 500; }
+  .header-actions { display: flex; align-items: center; gap: 3px; }
 
-  /* Badge */
-  .badge {
-    position: absolute;
-    top: -4px;
-    right: -4px;
-    background: #4da6ff;
-    color: white;
-    font-size: 8px;
-    font-weight: bold;
-    padding: 1px 4px;
-    border-radius: 8px;
+  .hbtn {
+    width: 27px; height: 27px;
+    border-radius: 5px; border: none; cursor: pointer;
+    background: transparent; color: #bbb; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0.35; transition: opacity 0.15s, background 0.15s, color 0.2s;
+    flex-shrink: 0; position: relative;
+  }
+  .hbtn:hover { opacity: 0.85; background: rgba(255,255,255,0.07); }
+  #rtl-btn { font-size: 16px; opacity: 0.38; transition: opacity 0.25s, color 0.25s, background 0.15s, box-shadow 0.2s; }
+  #rtl-btn.on { opacity: 1; color: #4da6ff; }
+  #rtl-btn.hover-state { opacity: 0.85; background: rgba(255,255,255,0.07); }
+  #rtl-btn.click-state { background: rgba(77,166,255,0.15); box-shadow: 0 0 0 2px rgba(77,166,255,0.3); }
+
+  /* Cursor dot */
+  #cursor {
+    position: fixed;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.9);
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.5);
     pointer-events: none;
-    white-space: nowrap;
-    opacity: 0;
-    transition: opacity 0.3s;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.08s, width 0.1s, height 0.1s;
+    display: none;
   }
-  .rtl-btn-wrap {
-    position: relative;
-  }
+  #cursor.click { width: 14px; height: 14px; background: rgba(77,166,255,0.95); }
 
   /* Messages */
   .messages {
-    flex: 1;
-    overflow-y: auto;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    scrollbar-width: thin;
-    scrollbar-color: #444 transparent;
+    flex: 1; overflow: hidden;
+    padding: 14px 16px;
+    display: flex; flex-direction: column; gap: 14px;
+    background: #1e1e1e;
   }
 
-  .message { display: flex; flex-direction: column; gap: 4px; }
+  .msg { display: flex; flex-direction: column; gap: 3px; }
+  .msg-label { font-size: 11px; color: #555; }
 
-  /* Claude message */
-  .msg-claude {
-    align-items: flex-start;
-  }
-  .msg-claude .bubble {
-    background: transparent;
-    color: #d4d4d4;
-    font-size: 13.5px;
-    line-height: 1.6;
-    max-width: 85%;
-    padding: 2px 0;
-  }
-  .msg-label {
-    font-size: 11px;
-    color: #666;
-    margin-bottom: 2px;
+  .bubble-claude {
+    color: #d0d0d0; font-size: 13px; line-height: 1.65;
+    max-width: 88%;
   }
 
-  /* User message */
-  .msg-user {
-    align-items: flex-end;
-  }
-  .msg-user .bubble {
+  .bubble-user {
     background: #2a2d2e;
-    border: 1px solid #3c3c3c;
+    border: 1px solid #3a3a3a;
     border-radius: 12px 12px 2px 12px;
     padding: 8px 12px;
-    font-size: 13.5px;
-    color: #d4d4d4;
-    max-width: 75%;
-    line-height: 1.6;
-    transition: direction 0.2s, text-align 0.2s;
+    font-size: 13px; color: #d0d0d0;
+    max-width: 72%; line-height: 1.6;
+    align-self: flex-end;
+    transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
   }
 
+  .msg-user { align-items: flex-end; transition: align-items 0s; }
+
   /* RTL state */
-  .rtl-active .msg-user.rtl-msg {
-    align-items: flex-start;
-  }
-  .rtl-active .msg-user.rtl-msg .bubble {
-    direction: rtl;
-    text-align: right;
+  .rtl-on .msg-user.heb { align-items: flex-start; }
+  .rtl-on .msg-user.heb .bubble-user {
+    direction: rtl; text-align: right;
     border-radius: 12px 12px 12px 2px;
-    margin-right: auto;
-    margin-left: 0;
+    margin-left: 0; align-self: flex-start;
   }
 
   /* Code block */
   .code-block {
-    background: #1a1a1a;
-    border: 1px solid #3c3c3c;
-    border-radius: 6px;
-    padding: 12px;
+    background: #1a1a1a; border: 1px solid #333;
+    border-radius: 6px; padding: 10px 12px;
     font-family: 'Cascadia Code', 'Fira Code', monospace;
-    font-size: 12px;
-    color: #9cdcfe;
-    direction: ltr !important;
-    text-align: left !important;
-    margin-top: 6px;
-    width: 85%;
+    font-size: 12px; color: #9cdcfe;
+    direction: ltr !important; text-align: left !important;
+    margin-top: 6px; max-width: 72%;
   }
-  .code-lang {
-    font-size: 10px;
-    color: #666;
-    margin-bottom: 6px;
-    font-family: inherit;
-  }
+  .code-lang { font-size: 10px; color: #555; margin-bottom: 5px; font-family: inherit; }
 
-  /* Input area */
+  /* Input */
   .input-area {
-    padding: 12px 16px;
-    border-top: 1px solid #3c3c3c;
-    flex-shrink: 0;
+    padding: 10px 14px;
+    border-top: 1px solid #2d2d2d;
+    background: #1e1e1e; flex-shrink: 0;
   }
   .input-box {
-    background: #2d2d2d;
-    border: 1px solid #3c3c3c;
-    border-radius: 8px;
-    padding: 10px 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    background: #2a2a2a; border: 1px solid #383838;
+    border-radius: 8px; padding: 9px 12px;
+    display: flex; align-items: center; gap: 8px;
   }
-  .input-field {
-    flex: 1;
-    font-size: 13px;
-    color: #ccc;
-    background: transparent;
-    border: none;
-    outline: none;
-    font-family: inherit;
-    resize: none;
-    transition: direction 0.2s, text-align 0.2s;
+  .input-placeholder {
+    flex: 1; font-size: 13px; color: #444;
+    transition: text-align 0.3s;
   }
-  .input-field::placeholder { color: #555; }
-  .rtl-active .input-field {
-    direction: rtl;
-    text-align: right;
-  }
+  .rtl-on .input-placeholder { text-align: right; }
   .send-btn {
-    width: 28px;
-    height: 28px;
-    background: #4da6ff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
+    width: 26px; height: 26px;
+    background: #4da6ff; border: none; border-radius: 6px;
+    color: white; font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
   }
-
-  /* Tooltip */
-  .tooltip {
-    position: fixed;
-    background: #333;
-    color: #fff;
-    font-size: 11px;
-    padding: 4px 8px;
-    border-radius: 4px;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.15s;
-    white-space: nowrap;
-    z-index: 100;
-  }
-
-  /* Demo label */
-  .demo-label {
-    text-align: center;
-    color: #555;
-    font-size: 11px;
-    margin-top: 12px;
-    letter-spacing: 0.5px;
-  }
-
-  /* Animate new RTL bubble */
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateX(-10px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-  .rtl-active .msg-user.rtl-msg .bubble {
-    animation: slideIn 0.25s ease;
-  }
-
-  /* Highlight the button on first load */
-  @keyframes pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(77,166,255,0); }
-    50% { box-shadow: 0 0 0 4px rgba(77,166,255,0.35); }
-  }
-  .pulse { animation: pulse 1.5s ease 0.8s 3; }
 </style>
 </head>
 <body>
 
-<div>
-  <div class="vscode-window">
-    <!-- Title bar -->
-    <div class="titlebar">
-      <div class="dot red"></div>
-      <div class="dot yellow"></div>
-      <div class="dot green"></div>
-      <div class="titlebar-text">Claude — Visual Studio Code</div>
+<div id="cursor"></div>
+
+<div class="vscode-window" id="win">
+  <div class="titlebar">
+    <div class="dot red"></div>
+    <div class="dot yel"></div>
+    <div class="dot grn"></div>
+    <div class="titlebar-text">Claude — Visual Studio Code</div>
+  </div>
+
+  <div class="chat-header">
+    <div class="header-left">
+      <div class="claude-icon">C</div>
+      <span class="header-title">Claude</span>
     </div>
-
-    <!-- Chat panel -->
-    <div class="chat-panel">
-      <!-- Header -->
-      <div class="chat-header">
-        <div class="header-left">
-          <div class="claude-icon">C</div>
-          <span class="header-title">Claude</span>
-        </div>
-        <div class="header-actions">
-          <button class="header-btn" title="New conversation">✎</button>
-          <button class="header-btn" title="History">⊞</button>
-          <div class="rtl-btn-wrap">
-            <button id="rtl-btn" class="header-btn pulse" title="RTL: Off — click to enable">⇄</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Messages -->
-      <div class="messages" id="messages">
-        <div class="message msg-claude">
-          <div class="msg-label">Claude</div>
-          <div class="bubble">
-            Hello! How can I help you today?
-          </div>
-        </div>
-
-        <div class="message msg-user">
-          <div class="bubble">Can you help me write a function in Python?</div>
-        </div>
-
-        <div class="message msg-claude">
-          <div class="msg-label">Claude</div>
-          <div class="bubble">
-            Sure! Here's a simple example:
-            <div class="code-block">
-              <div class="code-lang">python</div>
-              <span style="color:#569cd6">def</span> <span style="color:#dcdcaa">greet</span>(name: <span style="color:#4ec9b0">str</span>) -> <span style="color:#4ec9b0">str</span>:<br>
-              &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#569cd6">return</span> <span style="color:#ce9178">f"Hello, {name}!"</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="message msg-user rtl-msg">
-          <div class="bubble">תודה רבה! האם תוכל להסביר איך זה עובד?</div>
-        </div>
-
-        <div class="message msg-claude">
-          <div class="msg-label">Claude</div>
-          <div class="bubble">
-            Of course! The function takes a <code style="background:#2a2a2a;padding:1px 4px;border-radius:3px;font-size:12px">name</code> parameter and returns a formatted greeting string using an f-string.
-          </div>
-        </div>
-
-        <div class="message msg-user rtl-msg">
-          <div class="bubble">מצוין, עכשיו אני מבין. תודה!</div>
-        </div>
-      </div>
-
-      <!-- Input -->
-      <div class="input-area">
-        <div class="input-box">
-          <textarea class="input-field" id="input-field" rows="1" placeholder="Ask Claude anything..."></textarea>
-          <button class="send-btn">↑</button>
-        </div>
-      </div>
+    <div class="header-actions">
+      <button class="hbtn">✎</button>
+      <button class="hbtn">⊞</button>
+      <button class="hbtn" id="rtl-btn" title="RTL: Off">⇄</button>
     </div>
   </div>
-  <div class="demo-label" id="demo-label">↑ Click ⇄ in the header to toggle RTL — try typing Hebrew in the input</div>
+
+  <div class="messages" id="msgs">
+    <div class="msg">
+      <div class="msg-label">Claude</div>
+      <div class="bubble-claude">Hello! How can I help you today?</div>
+    </div>
+
+    <div class="msg msg-user">
+      <div class="bubble-user">why is my useEffect running twice in dev mode?</div>
+    </div>
+
+    <div class="msg">
+      <div class="msg-label">Claude</div>
+      <div class="bubble-claude">
+        React 18 intentionally runs effects twice in development with Strict Mode to help catch bugs. It mounts → unmounts → remounts to simulate future React behavior.<br><br>If your effect has side effects that shouldn't run twice, add a cleanup function:
+        <div class="code-block">
+          <div class="code-lang">tsx</div>
+          <span style="color:#569cd6">useEffect</span>(() => {<br>
+          &nbsp;&nbsp;<span style="color:#dcdcaa">fetchData</span>();<br>
+          &nbsp;&nbsp;<span style="color:#569cd6">return</span> () => <span style="color:#dcdcaa">controller</span>.<span style="color:#dcdcaa">abort</span>();<br>
+          }, []);
+        </div>
+      </div>
+    </div>
+
+    <div class="msg msg-user heb">
+      <div class="bubble-user">אחלה, אז זה רק בדב מוד? בפרודקשן זה לא קורה?</div>
+    </div>
+
+    <div class="msg">
+      <div class="msg-label">Claude</div>
+      <div class="bubble-claude">נכון בדיוק — בפרודקשן React מריץ את ה-effect פעם אחת בלבד. זה אך ורק התנהגות של Strict Mode בסביבת פיתוח.</div>
+    </div>
+
+    <div class="msg msg-user heb">
+      <div class="bubble-user">סבבה הבנתי, תודה רבה 🙏</div>
+    </div>
+  </div>
+
+  <div class="input-area">
+    <div class="input-box">
+      <div class="input-placeholder" id="inp">Ask Claude anything...</div>
+      <div class="send-btn">↑</div>
+    </div>
+  </div>
 </div>
 
-<div class="tooltip" id="tooltip"></div>
-
 <script>
-  const btn = document.getElementById('rtl-btn');
-  const panel = document.querySelector('.chat-panel');
-  const inputField = document.getElementById('input-field');
-  let enabled = false;
+  // Exposed for puppeteer control
+  window._rtlEnabled = false;
+  window._btn = document.getElementById('rtl-btn');
+  window._win = document.getElementById('win');
 
-  btn.addEventListener('click', function() {
-    enabled = !enabled;
-    btn.classList.toggle('rtl-on', enabled);
-    btn.title = enabled ? 'RTL: On — click to disable' : 'RTL: Off — click to enable';
-    panel.classList.toggle('rtl-active', enabled);
-  });
-
-  // Auto-resize textarea
-  inputField.addEventListener('input', function() {
-    this.style.height = 'auto';
-    this.style.height = Math.min(this.scrollHeight, 120) + 'px';
-  });
+  window.enableRTL = function() {
+    window._rtlEnabled = true;
+    window._btn.classList.add('on');
+    window._win.classList.add('rtl-on');
+    window._btn.title = 'RTL: On';
+  };
+  window.disableRTL = function() {
+    window._rtlEnabled = false;
+    window._btn.classList.remove('on');
+    window._win.classList.remove('rtl-on');
+    window._btn.title = 'RTL: Off';
+  };
+  window.hoverBtn = function(on) {
+    window._btn.classList.toggle('hover-state', on);
+  };
+  window.clickBtn = function(on) {
+    window._btn.classList.toggle('click-state', on);
+  };
+  window.showCursor = function(x, y, clicking) {
+    const c = document.getElementById('cursor');
+    c.style.display = 'block';
+    c.style.left = x + 'px';
+    c.style.top = y + 'px';
+    c.classList.toggle('click', clicking);
+  };
+  window.hideCursor = function() {
+    document.getElementById('cursor').style.display = 'none';
+  };
 </script>
 </body>
 </html>
