@@ -109,8 +109,9 @@ ${MARKER_START}
     function updateInput() {
         var inputs = document.querySelectorAll('[class*="messageInputContainer_"] > *');
         inputs.forEach(function(el) {
-            el.style.direction = enabled ? 'rtl' : '';
-            el.style.textAlign = enabled ? 'right' : '';
+            el.style.unicodeBidi = enabled ? 'plaintext' : '';
+            el.style.direction = enabled ? '' : '';
+            el.style.textAlign = enabled ? 'start' : '';
         });
     }
 
