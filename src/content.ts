@@ -78,13 +78,13 @@ ${MARKER_END}
 
 export const RTL_JS = `
 ${MARKER_START}
-(function() {
+(function() { try {
     var RTL = /[\\u0590-\\u05FF\\u0600-\\u06FF\\u0750-\\u077F\\uFB50-\\uFDFF\\uFE70-\\uFEFF]/;
     var CLS = 'YBYrtl';
     var SEL = '[class*="timelineMessage_"],[class*="userMessageContainer_"]';
     var KEY = 'yby-rtl-on';
 
-    var enabled = localStorage.getItem(KEY) !== 'false';
+    var enabled = (function() { try { return localStorage.getItem(KEY) !== 'false'; } catch(e) { return true; } })();
 
     function tagBubble(el) {
         if (!enabled) return;
@@ -130,7 +130,7 @@ ${MARKER_START}
         updateBtn(btn);
         btn.addEventListener('click', function() {
             enabled = !enabled;
-            localStorage.setItem(KEY, enabled ? 'true' : 'false');
+            try { localStorage.setItem(KEY, enabled ? 'true' : 'false'); } catch(e) {}
             updateBtn(btn);
             if (enabled) scanAll(); else clearAll();
             updateInput();
@@ -158,6 +158,6 @@ ${MARKER_START}
 
     if (document.readyState !== 'loading') init();
     else document.addEventListener('DOMContentLoaded', init);
-})();
+} catch(e) { console.warn('RTL extension error (non-fatal):', e); } })();
 ${MARKER_END}
 `;
